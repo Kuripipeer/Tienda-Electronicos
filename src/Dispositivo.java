@@ -33,6 +33,7 @@ class DispositivoMovil extends Dispositivo{
         System.out.println("Modelo: "+modelo);
         System.out.println("CPU: "+cpu);
         System.out.println("Tipo de pantalla: "+tipoPantalla);
+        System.out.println("Estado: "+ estado);
     }
 }
 
@@ -65,6 +66,7 @@ class Laptop extends Dispositivo{
         System.out.println("Modelo: "+modelo);
         System.out.println("CPU: "+cpu);
         System.out.println("Tipo de pantalla: "+tipoPantalla);
+        System.out.println("Estado: "+ estado);
     }
 
 }
