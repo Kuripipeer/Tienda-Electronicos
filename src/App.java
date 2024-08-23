@@ -67,18 +67,18 @@ public class App {
     }
 
     private static boolean verificarMantenimiento(Dispositivo dispositivo, Stack<Mantenimiento> inventario) {
-        if (dispositivo.añoFabricacion < 2010) {
-            dispositivo.estado = "Descontinuado";
+        if (dispositivo.getAñoFabricacion() < 2010) {
+            dispositivo.setEstado("Descontinuado");
             System.out.println("\nEl dispositivo está descontinuado\n");
             return false;
         }
         for (Mantenimiento mantenimiento : inventario) {
-            if (!inventario.empty() && mantenimiento.id == dispositivo.id) {
+            if (!inventario.empty() && mantenimiento.getId() == dispositivo.getId()) {
                 System.out.println("\nEl dispositivo ya está en mantenimiento\n");
                 return false;
             }
         }
-        dispositivo.estado = "En mantenimiento";
+        dispositivo.setEstado("En mantenimiento");
         return true;
     }
 
