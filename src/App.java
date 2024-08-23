@@ -45,8 +45,10 @@ public class App {
                         mantenimientos.modificarMantenimiento();
                         ;
                     } else if (op2 == 2) {
-                        System.out.println(mantenimientos.cancelarMantenimiento(inventario, auditorias, inventarioDMovil,
-                                inventarioDLaptop)? "Mantenimiento cancelado" : "No se encontró el dispositivo");
+                        System.out
+                                .println(mantenimientos.cancelarMantenimiento(inventario, auditorias, inventarioDMovil,
+                                        inventarioDLaptop) ? "Mantenimiento cancelado"
+                                                : "No se encontró el dispositivo");
                     } else if (op2 == 3) {
                         mantenimientos.entregarDispositivo();
                     } else if (op2 == 4) {
@@ -57,7 +59,7 @@ public class App {
                     continue;
                 }
             }
-            for(Mantenimiento mantenimiento: auditorias){
+            for (Mantenimiento mantenimiento : auditorias) {
                 mantenimiento.mostrarDatos();
             }
 
