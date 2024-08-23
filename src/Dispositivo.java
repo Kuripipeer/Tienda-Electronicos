@@ -164,5 +164,6 @@ class Laptop extends Dispositivo {
         this.setModelo(modelo);
         this.setCpu(cpu);
         this.setTipoPantalla(tipoPantalla);
+        this.setEstado("Pendiente");
     }
 }

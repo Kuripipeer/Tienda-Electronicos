@@ -24,15 +24,24 @@ public class App {
                     inventarioDMovil.push(movil1);
                     movil1.mostrarDatos();
                 }
+                Laptop laptop1 = new Laptop(2, 2019, "Windows 10", 8, 256, 8000, 5, 1080, "Asus",
+                        "Rog", "Amd 5", "AMOLED");
+                if (verificarMantenimiento(laptop1, inventario)) {
+                    mantenimientos = new Mantenimiento(laptop1);
+                    mantenimientos.mostrarDatos();
+                    inventario.push(mantenimientos);
+                    inventarioDLaptop.push(laptop1);
+                    laptop1.mostrarDatos();
+                }
             } else if (op == 2) {
                 if (inventario.empty()) {
                     System.out.println("\nNo hay dispositivos en mantenimiento\n");
                     continue;
                 }
-                System.out.println("Inserta el nombre del técnico");
+                System.out.println("\nInserta el nombre del técnico");
                 nombre = sc.nextLine();
                 if (validarCredencial(nombre)) {
-                    System.out.println("Bienvenido");
+                    System.out.println("\nBienvenido");
                     System.out.println("¿Que desea hacer?");
                     System.out.println("1. Modificar mantenimiento");
                     System.out.println("2. Cancelar mantenimiento");
@@ -62,22 +71,30 @@ public class App {
                     continue;
                 }
             } else if (op == 3) {
-                System.out.println("¿Que deseas ver?");
-                System.out.println("1. Auditorias");
-                System.out.println("2. Dispositivos en mantenimiento");
-                System.out.println("3. Dispositivos Moviles");
-                System.out.println("4. Laptops");
-                System.out.println("5. Salir");
-                op2 = sc.nextInt();
-                if (op2 == 1) {
-                    mostrarAuditorias(auditorias);
-                } else if (op2 == 2) {
-                    mostrarInventario(inventario);
-                } else if (op2 == 3) {
-                    mostrarInventarioDMovil(inventarioDMovil);
-                } else if (op2 == 4) {
-                    mostrarInventarioDLaptop(inventarioDLaptop);
-                } else if (op2 == 5) {
+                System.out.println("Inserta el nombre del técnico");
+                nombre = sc.nextLine();
+                if (validarCredencial(nombre)) {
+                    System.out.println("\nBienvenido");
+                    System.out.println("¿Que deseas ver?");
+                    System.out.println("1. Auditorias");
+                    System.out.println("2. Dispositivos en mantenimiento");
+                    System.out.println("3. Dispositivos Moviles");
+                    System.out.println("4. Laptops");
+                    System.out.println("5. Salir");
+                    op2 = sc.nextInt();
+                    if (op2 == 1) {
+                        mostrarAuditorias(auditorias);
+                    } else if (op2 == 2) {
+                        mostrarInventario(inventario);
+                    } else if (op2 == 3) {
+                        mostrarInventarioDMovil(inventarioDMovil);
+                    } else if (op2 == 4) {
+                        mostrarInventarioDLaptop(inventarioDLaptop);
+                    } else if (op2 == 5) {
+                        continue;
+                    }
+                } else {
+                    System.out.println("No tienes acceso, credencial incorrecta");
                     continue;
                 }
             }

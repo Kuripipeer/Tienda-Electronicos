@@ -68,8 +68,8 @@ public class Mantenimiento {
     private float calcularPrecio() {
         int op = 1;
         do {
-            System.out.println("¿Qué se le va a hacer?");
-            cambios += sc.nextLine() + "\n";
+            System.out.println("\n¿Qué se le va a hacer?");
+            cambios += sc.next() + "\n";
             System.out.println("¿Cual es el costo de la pieza?");
             costoPieza += sc.nextFloat();
 
@@ -93,18 +93,18 @@ public class Mantenimiento {
     public boolean modificarMantenimiento(Stack<Mantenimiento> inventario) {
         String cambio = "";
         int id, op;
-        System.out.println("Inserta el id del dispositivo");
+        System.out.println("\nInserta el id del dispositivo");
         id = sc.nextInt();
         for (Mantenimiento mantenimiento : inventario) {
             if (mantenimiento.getId() == id) {
                 cambio = mantenimiento.getCambios();
                 do {
-                    System.out.println("¿Qué se le va a hacer?");
+                    System.out.println("\n¿Qué se le va a hacer?");
                     cambio += sc.nextLine() + "\n";
                     cambio += sc.nextLine() + "\n";
                     System.out.println("¿Cual es el costo de la pieza?");
                     costoPieza = sc.nextFloat();
-                    setPrecio(costoPieza + getPrecio());
+                    mantenimiento.setPrecio(costoPieza + mantenimiento.getPrecio());
                     System.out.println("¿Desea agregar otro cambio? 1. Sí 2. No");
                     op = sc.nextInt();
                 } while (op == 1);
@@ -119,12 +119,13 @@ public class Mantenimiento {
 
     public boolean cancelarMantenimiento(Stack<Mantenimiento> inventario, Stack<Mantenimiento> auditorias,
             Stack<DispositivoMovil> inventarioDMovil, Stack<Laptop> inventarioDLaptop) {
-        System.out.println("Inserta el id del dispositivo");
+        System.out.println("\nInserta el id del dispositivo");
         int id = sc.nextInt();
         for (DispositivoMovil movil : inventarioDMovil) {
             if (movil.getId() == id) {
                 for (Mantenimiento mantenimiento : inventario) {
                     if (mantenimiento.getId() == id) {
+                        mantenimiento.setPrecio(mantenimiento.getPrecio() + cancelacion);
                         mantenimiento.setEstado("Mantenimiento cancelado");
                         mantenimiento.setFechaHoraActual(new Date());
                         auditorias.push(mantenimiento);
@@ -137,7 +138,17 @@ public class Mantenimiento {
         }
         for (Laptop laptop : inventarioDLaptop) {
             if (laptop.getId() == id) {
-                return true;
+                for (Mantenimiento mantenimiento : inventario) {
+                    if (mantenimiento.getId() == id) {
+                        mantenimiento.setPrecio(mantenimiento.getPrecio() + cancelacion);
+                        mantenimiento.setEstado("Mantenimiento cancelado");
+                        mantenimiento.setFechaHoraActual(new Date());
+                        auditorias.push(mantenimiento);
+                        inventario.remove(mantenimiento);
+                        inventarioDLaptop.remove(laptop);
+                        return true;
+                    }
+                }
             }
         }
         return false;
@@ -145,7 +156,7 @@ public class Mantenimiento {
 
     public boolean entregarDispositivo(Stack<Mantenimiento> inventario, Stack<Mantenimiento> auditorias,
             Stack<DispositivoMovil> inventarioDMovil, Stack<Laptop> inventarioDLaptop) {
-        System.out.println("Inserta el id del dispositivo");
+        System.out.println("\nInserta el id del dispositivo");
         int id = sc.nextInt();
         for (DispositivoMovil movil : inventarioDMovil) {
             if (movil.getId() == id) {
@@ -163,7 +174,16 @@ public class Mantenimiento {
         }
         for (Laptop laptop : inventarioDLaptop) {
             if (laptop.getId() == id) {
-                return true;
+                for (Mantenimiento mantenimiento : inventario) {
+                    if (mantenimiento.getId() == id) {
+                        mantenimiento.setEstado("Entregado");
+                        mantenimiento.setFechaHoraActual(new Date());
+                        auditorias.push(mantenimiento);
+                        inventario.remove(mantenimiento);
+                        inventarioDLaptop.remove(laptop);
+                        return true;
+                    }
+                }
             }
         }
         return false;
@@ -176,5 +196,4 @@ public class Mantenimiento {
             }
         }
     }
-
 }
