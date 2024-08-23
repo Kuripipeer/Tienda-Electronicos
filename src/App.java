@@ -10,14 +10,12 @@ public class App {
         Stack<Mantenimiento> inventario = new Stack<Mantenimiento>();
         Stack<Mantenimiento> auditorias = new Stack<Mantenimiento>();
         Mantenimiento mantenimientos = new Mantenimiento();
-        int op, id, op2;
+        int op, op2;
         String nombre;
         do {
             op = menu();
             if (op == 1) {
-                System.out.println("Inserte el id del dispositivo");
-                id = sc.nextInt();
-                DispositivoMovil movil1 = new DispositivoMovil(id, 2022, "Android", 8, 128, 4000, 1, 1080, "Samsung",
+                DispositivoMovil movil1 = new DispositivoMovil(1, 2022, "Android", 8, 128, 4000, 1, 1080, "Samsung",
                         "Galaxy A51", "Exynos 9611", "AMOLED");
                 if (verificarMantenimiento(movil1, inventario)) {
                     mantenimientos = new Mantenimiento(movil1);
@@ -42,15 +40,20 @@ public class App {
                     System.out.println("4. Volver al menu principal");
                     op2 = sc.nextInt();
                     if (op2 == 1) {
-                        mantenimientos.modificarMantenimiento();
-                        ;
+                        if (mantenimientos.modificarMantenimiento(inventario)) {
+                            System.out.println("Mantenimiento modificado");
+                        } else {
+                            System.out.println("No se encontró el dispositivo");
+                        }
                     } else if (op2 == 2) {
                         System.out
                                 .println(mantenimientos.cancelarMantenimiento(inventario, auditorias, inventarioDMovil,
                                         inventarioDLaptop) ? "Mantenimiento cancelado"
                                                 : "No se encontró el dispositivo");
                     } else if (op2 == 3) {
-                        mantenimientos.entregarDispositivo();
+                        System.out.println(mantenimientos.entregarDispositivo(inventario, auditorias, inventarioDMovil,
+                                inventarioDLaptop) ? "Dispositivo entregado"
+                                        : "No se encontró el dispositivo");
                     } else if (op2 == 4) {
                         continue;
                     }
@@ -58,12 +61,52 @@ public class App {
                     System.out.println("No tienes acceso, credencial incorrecta");
                     continue;
                 }
+            } else if (op == 3) {
+                System.out.println("¿Que deseas ver?");
+                System.out.println("1. Auditorias");
+                System.out.println("2. Dispositivos en mantenimiento");
+                System.out.println("3. Dispositivos Moviles");
+                System.out.println("4. Laptops");
+                System.out.println("5. Salir");
+                op2 = sc.nextInt();
+                if (op2 == 1) {
+                    mostrarAuditorias(auditorias);
+                } else if (op2 == 2) {
+                    mostrarInventario(inventario);
+                } else if (op2 == 3) {
+                    mostrarInventarioDMovil(inventarioDMovil);
+                } else if (op2 == 4) {
+                    mostrarInventarioDLaptop(inventarioDLaptop);
+                } else if (op2 == 5) {
+                    continue;
+                }
             }
-            for (Mantenimiento mantenimiento : auditorias) {
-                mantenimiento.mostrarDatos();
-            }
+        } while (op != 4);
+        System.out.println("Gracias por usar el sistema");
+    }
 
-        } while (op != 3);
+    private static void mostrarInventarioDLaptop(Stack<Laptop> inventarioDLaptop) {
+        for (Laptop laptop : inventarioDLaptop) {
+            laptop.mostrarDatos();
+        }
+    }
+
+    private static void mostrarInventarioDMovil(Stack<DispositivoMovil> inventarioDMovil) {
+        for (DispositivoMovil movil : inventarioDMovil) {
+            movil.mostrarDatos();
+        }
+    }
+
+    private static void mostrarInventario(Stack<Mantenimiento> inventario) {
+        for (Mantenimiento mantenimiento : inventario) {
+            mantenimiento.mostrarDatos();
+        }
+    }
+
+    private static void mostrarAuditorias(Stack<Mantenimiento> auditorias) {
+        for (Mantenimiento mantenimiento : auditorias) {
+            mantenimiento.mostrarDatos();
+        }
     }
 
     private static boolean verificarMantenimiento(Dispositivo dispositivo, Stack<Mantenimiento> inventario) {
@@ -88,10 +131,11 @@ public class App {
         System.out.println("¿Que desea hacer?");
         System.out.println("1. Validar dispositivo");
         System.out.println("2. Modificar o entregar dispositivo");
-        System.out.println("3. Salir");
+        System.out.println("3. Ver datos");
+        System.out.println("4. Salir");
 
         int opcion = sc.nextInt();
-        sc.nextLine(); // Consumir el salto de línea residual
+        sc.nextLine();
         return opcion;
     }
 

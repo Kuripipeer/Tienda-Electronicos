@@ -1,0 +1,38 @@
+@startuml Tienda 
+class App{
+
+}
+
+abstract class Dispositivo{
+    - id : int
+    - añoFabricacion : int
+    - ram : int
+    - rom : int
+    - bateria : int
+    - puertos : int
+    - resolucionPantalla : int
+    - marca : String
+    - modelo : String
+    - cpu : String 
+    - tipoPantalla : String 
+    - so : String  
+    - estado : String
+    + moostarDatos() : void
+}
+
+class DispositivoMovil {
+    DispositivoMovil(id : int, añoFabricacion : int, ram : int, rom : int, bateria : int, puertos : int,
+    resolucionPantalla : int, marca : String, modelo : String, cpu : String, tipoPantalla : String, so : String, estado : String)
+}
+
+class Laptop{
+    Laptop(id : int, añoFabricacion : int, ram : int, rom : int, bateria : int, puertos : int,
+    resolucionPantalla : int, marca : String, modelo : String, cpu : String, tipoPantalla : String, so : String, estado : String)
+}
+
+class Mantenimiento{
+
+}
+
+Dispositivo <|-- DispositivoMovil
+Dispositivo <|-- Laptop

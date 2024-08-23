@@ -126,6 +126,7 @@ abstract class Dispositivo {
         System.out.println("CPU: " + cpu);
         System.out.println("Tipo de pantalla: " + tipoPantalla);
         System.out.println("Estado: " + estado);
+        System.out.println("\n----------------------------------------------");
     }
 }
 
