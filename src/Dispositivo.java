@@ -21,7 +21,7 @@ class DispositivoMovil extends Dispositivo{
     }
 
     public void mostrarDatos(){
-        System.out.println("ID: "+id);
+        System.out.println("\nID: "+id);
         System.out.println("Año de fabricación: "+añoFabricacion);
         System.out.println("Sistema operativo: "+so);
         System.out.println("RAM: "+ram);
@@ -54,7 +54,7 @@ class Laptop extends Dispositivo{
     }
 
     public void mostrarDatos(){
-        System.out.println("ID: "+id);
+        System.out.println("\nID: "+id);
         System.out.println("Año de fabricación: "+añoFabricacion);
         System.out.println("Sistema operativo: "+so);
         System.out.println("RAM: "+ram);
