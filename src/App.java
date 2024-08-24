@@ -14,92 +14,133 @@ public class App {
         String nombre;
         do {
             op = menu();
-            if (op == 1) {
-                DispositivoMovil movil1 = new DispositivoMovil(1, 2022, "Android", 8, 128, 4000, 1, 1080, "Samsung",
-                        "Galaxy A51", "Exynos 9611", "AMOLED");
-                if (verificarMantenimiento(movil1, inventario)) {
-                    mantenimientos = new Mantenimiento(movil1);
-                    mantenimientos.mostrarDatos();
-                    inventario.push(mantenimientos);
-                    inventarioDMovil.push(movil1);
-                    movil1.mostrarDatos();
-                }
-                Laptop laptop1 = new Laptop(2, 2019, "Windows 10", 8, 256, 8000, 5, 1080, "Asus",
-                        "Rog", "Amd 5", "AMOLED");
-                if (verificarMantenimiento(laptop1, inventario)) {
-                    mantenimientos = new Mantenimiento(laptop1);
-                    mantenimientos.mostrarDatos();
-                    inventario.push(mantenimientos);
-                    inventarioDLaptop.push(laptop1);
-                    laptop1.mostrarDatos();
-                }
-            } else if (op == 2) {
-                if (inventario.empty()) {
-                    System.out.println("\nNo hay dispositivos en mantenimiento\n");
-                    continue;
-                }
-                System.out.println("\nInserta el nombre del técnico");
-                nombre = sc.nextLine();
-                if (validarCredencial(nombre)) {
-                    System.out.println("\nBienvenido");
-                    System.out.println("¿Que desea hacer?");
-                    System.out.println("1. Modificar mantenimiento");
-                    System.out.println("2. Cancelar mantenimiento");
-                    System.out.println("3. Entregar dispositivo");
-                    System.out.println("4. Volver al menu principal");
-                    op2 = sc.nextInt();
-                    if (op2 == 1) {
-                        if (mantenimientos.modificarMantenimiento(inventario)) {
-                            System.out.println("Mantenimiento modificado");
-                        } else {
-                            System.out.println("No se encontró el dispositivo");
+            switch (op) {
+                case 1:
+                    DispositivoMovil movil1 = new DispositivoMovil(1, 2022, "Android", 8, 128, 4000, 1, 1080, "Samsung",
+                            "Galaxy A51", "Exynos 9611", "AMOLED");
+                    if (verificarMantenimiento(movil1, inventario)) {
+                        mantenimientos = new Mantenimiento(movil1);
+                        mantenimientos.mostrarDatos();
+                        inventario.push(mantenimientos);
+                        inventarioDMovil.push(movil1);
+                        auditorias.push(mantenimientos);
+                        movil1.mostrarDatos();
+                    }
+                    Laptop laptop1 = new Laptop(2, 2019, "Windows 10", 8, 256, 8000, 5, 1080, "Asus",
+                            "Rog", "Amd 5", "AMOLED");
+                    if (verificarMantenimiento(laptop1, inventario)) {
+                        mantenimientos = new Mantenimiento(laptop1);
+                        mantenimientos.mostrarDatos();
+                        inventario.push(mantenimientos);
+                        inventarioDLaptop.push(laptop1);
+                        auditorias.push(mantenimientos);
+                        laptop1.mostrarDatos();
+                    }
+                    break;
+                case 2:
+                    if (inventario.empty()) {
+                        System.out.println("\nNo hay dispositivos en mantenimiento\n");
+                        continue;
+                    }
+                    System.out.println("\nInserta el nombre del técnico");
+                    nombre = sc.next().toLowerCase();
+                    if (validarCredencial(nombre)) {
+                        System.out.println("\nBienvenido");
+                        System.out.println("¿Que desea hacer?");
+                        System.out.println("1. Modificar mantenimiento");
+                        System.out.println("2. Cancelar mantenimiento");
+                        System.out.println("3. Entregar dispositivo");
+                        System.out.println("4. Volver al menu principal");
+
+                        String option = sc.next();
+                        while (!IsInteger(option)) {
+                            System.out.print(
+                                    "El valor ingresado no es un entero\n\nIntente nuevamente: ");
+                            option = sc.next();
                         }
-                    } else if (op2 == 2) {
-                        System.out
-                                .println(mantenimientos.cancelarMantenimiento(inventario, auditorias, inventarioDMovil,
-                                        inventarioDLaptop) ? "Mantenimiento cancelado"
-                                                : "No se encontró el dispositivo");
-                    } else if (op2 == 3) {
-                        System.out.println(mantenimientos.entregarDispositivo(inventario, auditorias, inventarioDMovil,
-                                inventarioDLaptop) ? "Dispositivo entregado"
-                                        : "No se encontró el dispositivo");
-                    } else if (op2 == 4) {
+                        op2 = Integer.parseInt(option);
+                        switch (op2) {
+                            case 1:
+                                if (mantenimientos.modificarMantenimiento(inventario, auditorias)) {
+                                    System.out.println("Mantenimiento modificado");
+                                } else {
+                                    System.out.println("No se encontró el dispositivo");
+                                }
+                                break;
+                            case 2:
+                                System.out
+                                        .println(mantenimientos.cancelarMantenimiento(inventario, auditorias,
+                                                inventarioDMovil,
+                                                inventarioDLaptop) ? "Mantenimiento cancelado"
+                                                        : "No se encontró el dispositivo");
+                                break;
+                            case 3:
+                                System.out.println(
+                                        mantenimientos.entregarDispositivo(inventario, auditorias, inventarioDMovil,
+                                                inventarioDLaptop) ? "Dispositivo entregado"
+                                                        : "No se encontró el dispositivo");
+                                break;
+                            case 4:
+                                continue;
+                            default:
+                                System.out.println("Opción no válida");
+                                break;
+                        }
+                    } else {
+                        System.out.println("No tienes acceso, credencial incorrecta");
                         continue;
                     }
-                } else {
-                    System.out.println("No tienes acceso, credencial incorrecta");
-                    continue;
-                }
-            } else if (op == 3) {
-                System.out.println("Inserta el nombre del técnico");
-                nombre = sc.nextLine();
-                if (validarCredencial(nombre)) {
-                    System.out.println("\nBienvenido");
-                    System.out.println("¿Que deseas ver?");
-                    System.out.println("1. Auditorias");
-                    System.out.println("2. Dispositivos en mantenimiento");
-                    System.out.println("3. Dispositivos Moviles");
-                    System.out.println("4. Laptops");
-                    System.out.println("5. Salir");
-                    op2 = sc.nextInt();
-                    if (op2 == 1) {
-                        mostrarAuditorias(auditorias);
-                    } else if (op2 == 2) {
-                        mostrarInventario(inventario);
-                    } else if (op2 == 3) {
-                        mostrarInventarioDMovil(inventarioDMovil);
-                    } else if (op2 == 4) {
-                        mostrarInventarioDLaptop(inventarioDLaptop);
-                    } else if (op2 == 5) {
+                    break;
+                case 3:
+                    System.out.println("Inserta el nombre del técnico");
+                    nombre = sc.next().toLowerCase();
+                    if (validarCredencial(nombre)) {
+                        System.out.println("\nBienvenido");
+                        System.out.println("¿Que deseas ver?");
+                        System.out.println("1. Auditorias");
+                        System.out.println("2. Dispositivos en mantenimiento");
+                        System.out.println("3. Dispositivos Moviles");
+                        System.out.println("4. Laptops");
+                        System.out.println("5. Salir");
+                        String option = sc.next();
+                        while (!IsInteger(option)) {
+                            System.out.print(
+                                    "El valor ingresado no es un entero\n\nIntente nuevamente: ");
+                            option = sc.next();
+                        }
+                        op2 = Integer.parseInt(option);
+                        switch (op2) {
+                            case 1:
+                                mostrarAuditorias(auditorias);
+                                break;
+                            case 2:
+                                mostrarInventario(inventario);
+                                break;
+                            case 3:
+                                mostrarInventarioDMovil(inventarioDMovil);
+                                break;
+                            case 4:
+                                mostrarInventarioDLaptop(inventarioDLaptop);
+                                break;
+                            case 5:
+                                continue;
+                            default:
+                                System.out.println("Opción no válida");
+                                break;
+                        }
+                    } else {
+                        System.out.println("No tienes acceso, credencial incorrecta");
                         continue;
                     }
-                } else {
-                    System.out.println("No tienes acceso, credencial incorrecta");
-                    continue;
-                }
+                    break;
+                case 4:
+                    System.out.println("Gracias por usar el sistema");
+                    break;
+                default:
+                    System.out.println("Opción no válida");
+                    break;
             }
         } while (op != 4);
-        System.out.println("Gracias por usar el sistema");
     }
 
     private static void mostrarInventarioDLaptop(Stack<Laptop> inventarioDLaptop) {
@@ -151,15 +192,32 @@ public class App {
         System.out.println("3. Ver datos");
         System.out.println("4. Salir");
 
-        int opcion = sc.nextInt();
-        sc.nextLine();
-        return opcion;
+        String option = sc.next();
+        while (!IsInteger(option)) {
+            System.out.print(
+                    "El valor ingresado no es un entero\n\nIntente nuevamente: ");
+            option = sc.next();
+        }
+        return Integer.parseInt(option);
     }
 
     private static boolean validarCredencial(String nombre) {
-        if (nombre.equals("Juan")) {
+        if (nombre.equals("juan")) {
             return true;
         }
         return false;
+    }
+
+    public static boolean IsInteger(String text) {
+        int v;
+        try {
+            v = Integer.parseInt(text);
+            if (v < 0) {
+                return false;
+            }
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
     }
 }

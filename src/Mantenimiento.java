@@ -71,10 +71,21 @@ public class Mantenimiento {
             System.out.println("\n¿Qué se le va a hacer?");
             cambios += sc.next() + "\n";
             System.out.println("¿Cual es el costo de la pieza?");
-            costoPieza += sc.nextFloat();
-
+            String dinero = sc.next();
+            while (!IsFloat(dinero)) {
+                System.out.print(
+                        "El valor ingresado no es un flotante\n\nIntente nuevamente: ");
+                dinero = sc.next();
+            }
+            costoPieza = Float.parseFloat(dinero);
             System.out.println("¿Desea agregar otro cambio? 1. Sí 2. No");
-            op = sc.nextInt();
+            String option = sc.next();
+            while (!IsInteger(option)) {
+                System.out.print(
+                        "El valor ingresado no es un entero\n\nIntente nuevamente: ");
+                option = sc.next();
+            }
+            op = Integer.parseInt(option);
         } while (op == 1);
         return costoPieza + manoObra;
     }
@@ -90,7 +101,7 @@ public class Mantenimiento {
         System.out.println("\n----------------------------------------------");
     }
 
-    public boolean modificarMantenimiento(Stack<Mantenimiento> inventario) {
+    public boolean modificarMantenimiento(Stack<Mantenimiento> inventario, Stack<Mantenimiento> auditorias) {
         String cambio = "";
         int id, op;
         System.out.println("\nInserta el id del dispositivo");
@@ -103,12 +114,25 @@ public class Mantenimiento {
                     cambio += sc.nextLine() + "\n";
                     cambio += sc.nextLine() + "\n";
                     System.out.println("¿Cual es el costo de la pieza?");
-                    costoPieza = sc.nextFloat();
+                    String dinero = sc.next();
+                    while (!IsFloat(dinero)) {
+                        System.out.print(
+                                "El valor ingresado no es un flotante\n\nIntente nuevamente: ");
+                        dinero = sc.next();
+                    }
+                    costoPieza = Float.parseFloat(dinero);
                     mantenimiento.setPrecio(costoPieza + mantenimiento.getPrecio());
                     System.out.println("¿Desea agregar otro cambio? 1. Sí 2. No");
-                    op = sc.nextInt();
+                    String option = sc.next();
+                    while (!IsInteger(option)) {
+                        System.out.print(
+                                "El valor ingresado no es un entero\n\nIntente nuevamente: ");
+                        option = sc.next();
+                    }
+                    op = Integer.parseInt(option);
                 } while (op == 1);
                 mantenimiento.setCambios(cambio);
+                auditorias.push(mantenimiento);
                 mostrarDetallesMantenimiento(id, inventario);
                 return true;
             }
@@ -194,6 +218,34 @@ public class Mantenimiento {
             if (mantenimiento.getId() == id) {
                 mantenimiento.mostrarDatos();
             }
+        }
+    }
+
+    public static boolean IsInteger(String text) {
+        int v;
+        try {
+            v = Integer.parseInt(text);
+            if (v < 0) {
+                return false;
+            }
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
+
+    public static boolean IsFloat(String text) {
+        float y;
+        try {
+            // Convierte la cadena de texto en un valor flotante
+            y = Float.parseFloat(text);
+            if (y < 0) {
+                return false;
+            }
+            return true;
+            // Si el usuario ingresó un carácter no numérico, devuelve false
+        } catch (NumberFormatException ex) {
+            return false;
         }
     }
 }
