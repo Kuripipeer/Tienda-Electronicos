@@ -77,7 +77,7 @@ public class Mantenimiento {
                         "El valor ingresado no es un flotante\n\nIntente nuevamente: ");
                 dinero = sc.next();
             }
-            costoPieza = Float.parseFloat(dinero);
+            costoPieza += Float.parseFloat(dinero);
             System.out.println("¿Desea agregar otro cambio? 1. Sí 2. No");
             String option = sc.next();
             while (!IsInteger(option)) {
